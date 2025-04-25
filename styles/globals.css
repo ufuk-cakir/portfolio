@@ -90,60 +90,45 @@ body {
 
 
 table {
-  width: 100%; /* Make tables take up available width */
-  border-collapse: collapse; /* Collapse borders */
-  margin-top: 1.5em; /* Add space above/below tables */
+  /* Keep structural styles */
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5em;
   margin-bottom: 1.5em;
-  font-size: 0.9em; /* Optional: Adjust font size */
-  line-height: 1.6; /* Optional: Adjust line height */
+  font-size: 0.9em;
+  line-height: 1.6;
 }
 
 th,
 td {
-  border: 1px solid #ccc; /* Example border - use your theme's color */
-  padding: 0.6em 0.8em; /* Add padding inside cells */
-  text-align: left; /* Align text */
+  /* Common styles for both th and td */
+  @apply text-left p-[0.6em_0.8em]; /* Use Tailwind padding syntax for custom values */
+
+  /* --- Border Styling --- */
+  /* Light mode border */
+  @apply border border-gray-300; /* Use Tailwind color */
+  /* Dark mode border */
+  @apply dark:border-gray-600;   /* Use darker border for dark mode */
 }
 
 th {
-  background-color: #f2f2f2; /* Example header background */
-  font-weight: bold; /* Make headers bold */
+  /* --- Table Header Specific Styling --- */
+  /* Common */
+  @apply font-bold; /* Keep font-bold */
+
+  /* Light mode */
+  @apply bg-gray-100 text-gray-800; /* Use Tailwind bg/text for light mode */
+
+  /* Dark mode overrides */
+  @apply dark:bg-gray-700 dark:text-gray-100; /* Dark bg, light text */
+  /* Adjust dark:bg-gray-700 and dark:text-gray-100 as needed for contrast */
 }
 
-/* Style other elements as needed if prose was styling them before */
-h1, h2, h3, h4, h5, h6 {
-  /* Your heading styles */
-  margin-top: 1.2em;
-  margin-bottom: 0.6em;
-  font-weight: bold;
+td {
+  /* --- Table Cell Specific Styling --- */
+  /* Light mode text (can often inherit from body, but explicit is safer) */
+   @apply text-white; /* Adjust as needed */
+
+  /* Dark mode text */
+   @apply dark:text-white; /* Adjust as needed */
 }
-
-p {
-  /* Your paragraph styles */
-  margin-bottom: 1em;
-}
-
-
-ul, ol {
-   margin-left: 1.5em;
-   margin-bottom: 1em;
-}
-
-li {
-   margin-bottom: 0.5em;
-}
-
-/* Add styles for code blocks, blockquotes etc. if needed */
-pre {
-   /* Often handled by syntax highlighter, but you might need margin/padding */
-   margin-bottom: 1em;
-}
-
-/* Example using the wrapper class from ContentSection.js for scoped styles */
-/* .markdown-content-area table {
-   border: 2px solid blue; // Only tables inside this container get a blue border
-} */
-
-/* Add your dark mode styles using appropriate selectors if needed */
-/* html.dark table { ... } */
-/* html.dark th { ... } */
