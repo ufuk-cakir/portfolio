@@ -1,17 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Hind:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;1,300&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @import "./markdown.css";
 
 * {
-  font-family: "Hind";
+font-family: "IBM Plex Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }
 
 body {
   @apply dark:bg-black dark:text-white;
 }
-
+/* after Tailwind’s @tailwind directives */
+.text-justify {
+  text-align: justify;
+}
 .gradient-circle {
   position: absolute;
   pointer-events: none;
@@ -75,3 +84,66 @@ body {
   background: inherit;
   border-radius: inherit;
 }
+
+
+
+
+
+table {
+  width: 100%; /* Make tables take up available width */
+  border-collapse: collapse; /* Collapse borders */
+  margin-top: 1.5em; /* Add space above/below tables */
+  margin-bottom: 1.5em;
+  font-size: 0.9em; /* Optional: Adjust font size */
+  line-height: 1.6; /* Optional: Adjust line height */
+}
+
+th,
+td {
+  border: 1px solid #ccc; /* Example border - use your theme's color */
+  padding: 0.6em 0.8em; /* Add padding inside cells */
+  text-align: left; /* Align text */
+}
+
+th {
+  background-color: #f2f2f2; /* Example header background */
+  font-weight: bold; /* Make headers bold */
+}
+
+/* Style other elements as needed if prose was styling them before */
+h1, h2, h3, h4, h5, h6 {
+  /* Your heading styles */
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+  font-weight: bold;
+}
+
+p {
+  /* Your paragraph styles */
+  margin-bottom: 1em;
+}
+
+
+ul, ol {
+   margin-left: 1.5em;
+   margin-bottom: 1em;
+}
+
+li {
+   margin-bottom: 0.5em;
+}
+
+/* Add styles for code blocks, blockquotes etc. if needed */
+pre {
+   /* Often handled by syntax highlighter, but you might need margin/padding */
+   margin-bottom: 1em;
+}
+
+/* Example using the wrapper class from ContentSection.js for scoped styles */
+/* .markdown-content-area table {
+   border: 2px solid blue; // Only tables inside this container get a blue border
+} */
+
+/* Add your dark mode styles using appropriate selectors if needed */
+/* html.dark table { ... } */
+/* html.dark th { ... } */

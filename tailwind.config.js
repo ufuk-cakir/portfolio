@@ -12,7 +12,9 @@ module.exports = {
       desktop: "1280px",
       laptopl: "1440px",
     },
-    extend: {},
+    extend: { fontFamily: {
+        sans: ['"IBM Plex Sans"', 'ui-sans-serif', 'system-ui'],
+      },},
   },
   plugins: [],
 };

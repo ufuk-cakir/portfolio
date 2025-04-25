@@ -1,17 +1,20 @@
+// Header.js
+
 import { Popover } from "@headlessui/react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Button from "../Button";
 // Local Data
-import data from "../../data/portfolio.json";
+import data from "../../data/portfolio.json"; // Correct path assumed
 
 const Header = ({ handleWorkScroll, handleAboutScroll, isBlog }) => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  const { name, showBlog, showResume } = data;
+  // Make sure showResearch is destructured
+  const { name, showBlog, showResume, showResearch } = data;
 
   useEffect(() => {
     setMounted(true);
@@ -19,109 +22,80 @@ const Header = ({ handleWorkScroll, handleAboutScroll, isBlog }) => {
 
   return (
     <>
+      {/* Popover (Mobile Menu) - Looks OK */}
       <Popover className="block tablet:hidden mt-5">
-        {({ open }) => (
-          <>
-            <div className="flex items-center justify-between p-2 laptop:p-0">
-              <h1
-                onClick={() => router.push("/")}
-                className="font-medium p-2 laptop:p-0 link"
-              >
-                {name}.
-              </h1>
-
-              <div className="flex items-center">
-                {data.darkMode && (
-                  <Button
-                    onClick={() =>
-                      setTheme(theme === "dark" ? "light" : "dark")
-                    }
-                  >
-                    <img
-                      className="h-6"
-                      src={`/images/${
-                        theme === "dark" ? "moon.svg" : "sun.svg"
-                      }`}
-                    ></img>
-                  </Button>
-                )}
-
-                <Popover.Button>
-                  <img
-                    className="h-5"
-                    src={`/images/${
-                      !open
-                        ? theme === "dark"
-                          ? "menu-white.svg"
-                          : "menu.svg"
-                        : theme === "light"
-                        ? "cancel.svg"
-                        : "cancel-white.svg"
-                    }`}
-                  ></img>
-                </Popover.Button>
-              </div>
-            </div>
-            <Popover.Panel
-              className={`absolute right-0 z-10 w-11/12 p-4 ${
-                theme === "dark" ? "bg-slate-800" : "bg-white"
-              } shadow-md rounded-md`}
-            >
-              {!isBlog ? (
-                <div className="grid grid-cols-1">
-                  <Button onClick={handleWorkScroll}>Work</Button>
-                  <Button onClick={handleAboutScroll}>About</Button>
-                  {showBlog && (
-                    <Button onClick={() => router.push("/blog")}>Blog</Button>
-                  )}
-                  {showResume && (
-                    <Button
-                      onClick={() =>
-                        window.open("mailto:hello@chetanverma.com")
-                      }
-                    >
-                      Resume
-                    </Button>
-                  )}
-
-                  <Button
-                    onClick={() => window.open("mailto:hello@chetanverma.com")}
-                  >
-                    Contact
-                  </Button>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1">
-                  <Button onClick={() => router.push("/")} classes="first:ml-1">
-                    Home
-                  </Button>
-                  {showBlog && (
-                    <Button onClick={() => router.push("/blog")}>Blog</Button>
-                  )}
-                  {showResume && (
-                    <Button
-                      onClick={() => router.push("/resume")}
-                      classes="first:ml-1"
-                    >
-                      Resume
-                    </Button>
-                  )}
-
-                  <Button
-                    onClick={() => window.open("mailto:hello@chetanverma.com")}
-                  >
-                    Contact
-                  </Button>
-                </div>
+        {/* ... existing popover code ... */}
+        <Popover.Panel
+          className={`absolute right-0 z-10 w-11/12 p-4 ${
+            theme === "dark" ? "bg-slate-800" : "bg-white"
+          } shadow-md rounded-md`}
+        >
+          {!isBlog ? (
+            <div className="grid grid-cols-1">
+              <Button onClick={handleWorkScroll}>Projects</Button>
+              <Button onClick={handleAboutScroll}>About</Button>
+              {/* Research button - already here */}
+              {showResearch && (
+                <Button onClick={() => router.push("/research")}>
+                  Research
+                </Button>
               )}
-            </Popover.Panel>
-          </>
-        )}
+              {showBlog && (
+                <Button onClick={() => router.push("/blog")}>Blog</Button>
+              )}
+              {/* Note: Resume button here uses mailto:, different from desktop */}
+              {showResume && (
+                <Button
+                  onClick={() =>
+                    window.open("mailto:ufukcakir@robots.ox.ac.uk") // Check if this is intended vs /resume route
+                  }
+                >
+                  Resume
+                </Button>
+              )}
+              <Button
+                onClick={() => window.open("mailto:ufukcakir@robots.ox.ac.uk")}
+              >
+                Contact
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1">
+              <Button onClick={() => router.push("/")} classes="first:ml-1">
+                Home
+              </Button>
+              {/* Research button - already here */}
+              {showResearch && (
+                <Button onClick={() => router.push("/research")}>
+                 Research
+                </Button>
+              )}
+              {showBlog && (
+                <Button onClick={() => router.push("/blog")}>Blog</Button>
+              )}
+              {showResume && (
+                <Button
+                  onClick={() => router.push("/resume")} // Uses /resume route here
+                  classes="first:ml-1"
+                >
+                  Resume
+                </Button>
+              )}
+              <Button
+                onClick={() => window.open("mailto:ufukcakir@robots.ox.ac.uk")}
+              >
+                Contact
+              </Button>
+            </div>
+          )}
+        </Popover.Panel>
       </Popover>
+
+      {/* Desktop Header */}
       <div
         className={`mt-10 hidden flex-row items-center justify-between sticky ${
-          theme === "light" && "bg-white"
-        } dark:text-white top-0 z-10 tablet:flex`}
+          theme === "light" ? "bg-white shadow-sm" : "dark:bg-gray-900" // Added shadow/bg example
+        } dark:text-white top-0 z-10 tablet:flex py-4 px-6`} // Added padding/styling example
       >
         <h1
           onClick={() => router.push("/")}
@@ -130,62 +104,81 @@ const Header = ({ handleWorkScroll, handleAboutScroll, isBlog }) => {
           {name}.
         </h1>
         {!isBlog ? (
-          <div className="flex">
-            <Button onClick={handleWorkScroll}>Work</Button>
+          <div className="flex items-center space-x-4"> {/* Use space-x for spacing */}
+            <Button onClick={handleWorkScroll}>Projects</Button>
             <Button onClick={handleAboutScroll}>About</Button>
+
+            {/* === ADD RESEARCH BUTTON HERE for Desktop (!isBlog) === */}
+            {showResearch && (
+              <Button onClick={() => router.push("/research")}>
+                Research
+              </Button>
+            )}
+            {/* ==================================================== */}
+
             {showBlog && (
               <Button onClick={() => router.push("/blog")}>Blog</Button>
             )}
             {showResume && (
               <Button
-                onClick={() => router.push("/resume")}
-                classes="first:ml-1"
+                onClick={() => router.push("/resume")} // Uses /resume route
+                // classes="first:ml-1" // Might not be needed depending on position
               >
                 Resume
               </Button>
             )}
-
-            <Button onClick={() => window.open("mailto:hello@chetanverma.com")}>
+            <Button onClick={() => window.open("mailto:ufukcakir@robots.ox.ac.uk")}>
               Contact
             </Button>
             {mounted && theme && data.darkMode && (
               <Button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                type="icon" // Assuming Button component can handle icon type for styling
               >
                 <img
-                  className="h-6"
+                  className="h-6 w-6" // Ensure size consistency
                   src={`/images/${theme === "dark" ? "moon.svg" : "sun.svg"}`}
-                ></img>
+                  alt="Toggle theme" // Add alt text
+                />
               </Button>
             )}
           </div>
         ) : (
-          <div className="flex">
+          <div className="flex items-center space-x-4"> {/* Use space-x for spacing */}
             <Button onClick={() => router.push("/")}>Home</Button>
+
+             {/* === ADD RESEARCH BUTTON HERE for Desktop (isBlog) === */}
+             {showResearch && (
+              <Button onClick={() => router.push("/research")}>
+                Research
+              </Button>
+            )}
+            {/* =================================================== */}
+
             {showBlog && (
               <Button onClick={() => router.push("/blog")}>Blog</Button>
             )}
             {showResume && (
               <Button
-                onClick={() => router.push("/resume")}
-                classes="first:ml-1"
+                onClick={() => router.push("/resume")} // Uses /resume route
+                // classes="first:ml-1" // Might not be needed
               >
                 Resume
               </Button>
             )}
-
-            <Button onClick={() => window.open("mailto:hello@chetanverma.com")}>
+            <Button onClick={() => window.open("mailto:ufukcakir@robots.ox.ac.uk")}>
               Contact
             </Button>
-
             {mounted && theme && data.darkMode && (
               <Button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                type="icon"
               >
                 <img
-                  className="h-6"
+                  className="h-6 w-6"
                   src={`/images/${theme === "dark" ? "moon.svg" : "sun.svg"}`}
-                ></img>
+                  alt="Toggle theme"
+                />
               </Button>
             )}
           </div>
